@@ -21,14 +21,15 @@ import { ReportesModule } from './reportes/reportes.module';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        host: configService.get<string>('DB_HOST', 'localhost'),
-        port: configService.get<number>('DB_PORT', 5432),
-        username: configService.get<string>('DB_USERNAME', 'postgres'),
-        password: configService.get<string>('DB_PASSWORD', ''),
-        database: configService.get<string>('DB_NAME', 'hotchicken_db'),
+        // Si existe DATABASE_URL (en Render), la usa directamente. Si no, usa el desglose (en tu localhost)
+        url: configService.get<string>('DATABASE_URL'),
+        host: !configService.get<string>('DATABASE_URL') ? configService.get<string>('DB_HOST', 'localhost') : undefined,
+        port: !configService.get<string>('DATABASE_URL') ? configService.get<number>('DB_PORT', 5432) : undefined,
+        username: !configService.get<string>('DATABASE_URL') ? configService.get<string>('DB_USERNAME', 'postgres') : undefined,
+        password: !configService.get<string>('DATABASE_URL') ? configService.get<string>('DB_PASSWORD', '') : undefined,
+        database: !configService.get<string>('DATABASE_URL') ? configService.get<string>('DB_NAME', 'hotchicken_db') : undefined,
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: configService.get<boolean>('DB_SYNCHRONIZE', true),
-        // ⚠️ En producción: synchronize: false, usar migraciones
         logging: configService.get<boolean>('DB_LOGGING', false),
       }),
       inject: [ConfigService],
@@ -43,4 +44,4 @@ import { ReportesModule } from './reportes/reportes.module';
     ReportesModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }
