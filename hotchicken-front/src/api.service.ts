@@ -1,9 +1,7 @@
 /**
  * api.service.ts — Servicio centralizado para el frontend HotChicken
  */
-
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api/v1';
-
+const BASE_URL = 'https://hotchicken-backend.onrender.com/api/v1';
 async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const token = localStorage.getItem('token');
   const headers: Record<string, string> = {
