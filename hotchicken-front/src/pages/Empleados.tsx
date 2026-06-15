@@ -15,13 +15,13 @@ interface Empleado {
 }
 
 const ROL_LABELS: Record<string, string> = {
-  admin:    'Administrador',
-  mesero:   'Mesero',
+  admin: 'Administrador',
+  mesero: 'Mesero',
   cocinero: 'Cocinero',
-  cajero:   'Cajero',
+  cajero: 'Cajero',
 };
 
-const BASE = 'http://localhost:3000/api/v1';
+const BASE = 'https://hotchicken-backend.onrender.com/api/v1';
 const getToken = () => localStorage.getItem('token');
 const headers = () => ({
   'Authorization': `Bearer ${getToken()}`,
@@ -30,29 +30,29 @@ const headers = () => ({
 
 const Empleados = () => {
   const navigate = useNavigate();
-  const [empleados, setEmpleados]         = useState<Empleado[]>([]);
-  const [loading, setLoading]             = useState(true);
-  const [error, setError]                 = useState('');
-  const [mostrarForm, setMostrarForm]     = useState(false);
+  const [empleados, setEmpleados] = useState<Empleado[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [mostrarForm, setMostrarForm] = useState(false);
 
   // Formulario crear
-  const [nombre, setNombre]   = useState('');
-  const [user, setUser]       = useState('');
-  const [pass, setPass]       = useState('');
-  const [rol, setRol]         = useState('mesero');
+  const [nombre, setNombre] = useState('');
+  const [user, setUser] = useState('');
+  const [pass, setPass] = useState('');
+  const [rol, setRol] = useState('mesero');
   const [guardando, setGuardando] = useState(false);
 
   // Edición inline
-  const [editId, setEditId]           = useState<number | null>(null);
-  const [editNombre, setEditNombre]   = useState('');
-  const [editUser, setEditUser]       = useState('');
-  const [editRol, setEditRol]         = useState('');
-  const [editPass, setEditPass]       = useState('');
+  const [editId, setEditId] = useState<number | null>(null);
+  const [editNombre, setEditNombre] = useState('');
+  const [editUser, setEditUser] = useState('');
+  const [editRol, setEditRol] = useState('');
+  const [editPass, setEditPass] = useState('');
   const [guardandoEdit, setGuardandoEdit] = useState(false);
 
   // Confirmación eliminar
   const [confirmarId, setConfirmarId] = useState<number | null>(null);
-  const [eliminando, setEliminando]   = useState(false);
+  const [eliminando, setEliminando] = useState(false);
 
   const cargar = async () => {
     setLoading(true); setError('');

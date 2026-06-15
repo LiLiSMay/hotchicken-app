@@ -22,9 +22,9 @@ const isoHaceDias = (n: number) => {
 
 // ─── Config visual de mesas ───────────────────────────────────────────────────
 const mesaEstilo: Record<Mesa['estado'], { fondo: string; borde: string; texto: string }> = {
-  libre:     { fondo: 'bg-white',     borde: 'border-slate-200', texto: 'text-slate-300' },
-  ocupada:   { fondo: 'bg-[#E11D48]', borde: 'border-[#E11D48]', texto: 'text-white'    },
-  reservada: { fondo: 'bg-amber-400', borde: 'border-amber-400', texto: 'text-white'    },
+  libre: { fondo: 'bg-white', borde: 'border-slate-200', texto: 'text-slate-300' },
+  ocupada: { fondo: 'bg-[#E11D48]', borde: 'border-[#E11D48]', texto: 'text-white' },
+  reservada: { fondo: 'bg-amber-400', borde: 'border-amber-400', texto: 'text-white' },
 };
 
 const TarjetaMesa = ({ mesa }: { mesa: Mesa }) => {
@@ -43,20 +43,20 @@ const COLORES = ['#E11D48', '#fb923c', '#f87171', '#60a5fa', '#a78bfa', '#34d399
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [menuAbierto, setMenuAbierto] = useState(false);
-  const [cargando, setCargando]       = useState(true);
+  const [cargando, setCargando] = useState(true);
   const [cargandoGraf, setCargandoGraf] = useState(false);
 
   const [kpis, setKpis] = useState<DashboardKpis>({
     ventasTotalesHoy: 0, platosVendidosHoy: 0,
     comandasActivasAhora: 0, comandasCerradasHoy: 0,
   });
-  const [grafico, setGrafico]         = useState<GraficoItem[]>([]);
+  const [grafico, setGrafico] = useState<GraficoItem[]>([]);
   const [solicitudes, setSolicitudes] = useState(0);
-  const [mesas, setMesas]             = useState<Mesa[]>([]);
+  const [mesas, setMesas] = useState<Mesa[]>([]);
 
   // Selector de fechas
-  const [desde, setDesde]     = useState(isoHoy());
-  const [hasta, setHasta]     = useState(isoHoy());
+  const [desde, setDesde] = useState(isoHoy());
+  const [hasta, setHasta] = useState(isoHoy());
   const [periodo, setPeriodo] = useState<'hoy' | '7d' | '30d' | 'custom'>('hoy');
 
   // ─── Cargadores ──────────────────────────────────────────────────────────
@@ -93,11 +93,11 @@ const AdminDashboard = () => {
   }, [desde, hasta]);
 
   const cargarMesas = useCallback(async () => {
-    try { setMesas(await api.getMesas()); } catch {}
+    try { setMesas(await api.getMesas()); } catch { }
   }, []);
 
   const cargarSolicitudes = useCallback(async () => {
-    try { setSolicitudes((await api.getSolicitudesPendientes()).length); } catch {}
+    try { setSolicitudes((await api.getSolicitudesPendientes()).length); } catch { }
   }, []);
 
   const cargarTodo = useCallback(async () => {
@@ -113,7 +113,7 @@ const AdminDashboard = () => {
     setPeriodo(p);
     const h = isoHoy();
     if (p === 'hoy') { setDesde(h); setHasta(h); }
-    if (p === '7d')  { setDesde(isoHaceDias(6));  setHasta(h); }
+    if (p === '7d') { setDesde(isoHaceDias(6)); setHasta(h); }
     if (p === '30d') { setDesde(isoHaceDias(29)); setHasta(h); }
   };
 
@@ -127,7 +127,7 @@ const AdminDashboard = () => {
         kpisData = esHoy
           ? await api.getDashboardKpis()
           : await api.getKpisRango(desde, hasta);
-      } catch {}
+      } catch { }
 
       // Usar el mismo endpoint que el gráfico → mismos datos que se ven en pantalla
       let detalleProductos: any[] = [];
@@ -141,7 +141,7 @@ const AdminDashboard = () => {
           ingresoTotal: Number(p.ingresos),
         }));
         totalGeneral = detalleProductos.reduce((s, p) => s + p.ingresoTotal, 0);
-      } catch {}
+      } catch { }
 
       const fechaLabel = esHoy
         ? new Date().toLocaleDateString('es-BO', { year: 'numeric', month: 'long', day: 'numeric' })
@@ -149,7 +149,7 @@ const AdminDashboard = () => {
 
       const mesasActuales = mesas.length > 0 ? mesas : await api.getMesas().catch(() => []);
       const libre = mesasActuales.filter(m => m.estado === 'libre').length;
-      const ocup  = mesasActuales.filter(m => m.estado === 'ocupada').length;
+      const ocup = mesasActuales.filter(m => m.estado === 'ocupada').length;
 
       const filas = detalleProductos.length > 0
         ? detalleProductos.map(p => `
@@ -232,9 +232,9 @@ const AdminDashboard = () => {
     );
   };
 
-  const libres   = mesas.filter(m => m.estado === 'libre').length;
+  const libres = mesas.filter(m => m.estado === 'libre').length;
   const ocupadas = mesas.filter(m => m.estado === 'ocupada').length;
-  const reserv   = mesas.filter(m => m.estado === 'reservada').length;
+  const reserv = mesas.filter(m => m.estado === 'reservada').length;
   const totalIngresos = grafico.reduce((s, p) => s + Number(p.ingresos), 0);
 
   return (
@@ -256,11 +256,11 @@ const AdminDashboard = () => {
           HOT<span className="text-[#FACC15]">CHICKEN</span>
         </h2>
         <nav className="space-y-2 flex-1">
-          <NavBtn icon={LayoutDashboard} label="Dashboard"        path="/admin" />
-          <NavBtn icon={ChefHat}         label="Cocina / Pedidos" path="/admin/cocina"      badge={kpis.comandasActivasAhora} />
-          <NavBtn icon={UserCheck}        label="Solicitudes"      path="/admin/solicitudes" badge={solicitudes} />
-          <NavBtn icon={Users}            label="Empleados"        path="/empleados" />
-          <NavBtn icon={Package}          label="Inventario"       path="/admin/inventario" />
+          <NavBtn icon={LayoutDashboard} label="Dashboard" path="/admin" />
+          <NavBtn icon={ChefHat} label="Cocina / Pedidos" path="/admin/cocina" badge={kpis.comandasActivasAhora} />
+          <NavBtn icon={UserCheck} label="Solicitudes" path="/admin/solicitudes" badge={solicitudes} />
+          <NavBtn icon={Users} label="Empleados" path="/empleados" />
+          <NavBtn icon={Package} label="Inventario" path="/admin/inventario" />
         </nav>
         <button onClick={cerrarSesion} className="flex items-center gap-3 w-full p-3 text-red-400 font-bold hover:bg-red-900/20 rounded-xl transition-all">
           <LogOut size={20} /> Cerrar Sesión

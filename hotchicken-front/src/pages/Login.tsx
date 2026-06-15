@@ -36,7 +36,7 @@ const Login = () => {
 
         // 2. CONEXIÓN REAL: Enviamos los datos al backend de NestJS
         try {
-            const response = await fetch('http://localhost:3000/api/v1/auth/login', {
+            const response = await fetch('https://hotchicken-backend.onrender.com/api/v1/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

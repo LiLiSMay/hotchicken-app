@@ -248,23 +248,23 @@ const Cocina = () => {
                         {/* SECCIÓN PENDIENTES + EN COCINA */}
                         <section className="space-y-6">
                             <div>
-                            <h2 className="text-lg font-black text-slate-800 uppercase mb-4 flex items-center gap-2">
-                                <span className="w-3 h-3 rounded-full bg-orange-400 animate-pulse"></span>
-                                Pendientes ({pendientes.length + enCocina.length})
-                            </h2>
-                            {pendientes.length === 0 && enCocina.length === 0 ? (
-                                <div className="bg-white rounded-[1.5rem] border-2 border-dashed border-slate-200 p-12 text-center">
-                                    <Utensils size={40} className="mx-auto text-slate-200 mb-3" />
-                                    <p className="text-slate-400 font-bold">Sin pedidos activos</p>
-                                    <p className="text-slate-300 text-xs mt-1">Los nuevos pedidos aparecerán aquí</p>
-                                </div>
-                            ) : (
-                                <div className="space-y-4">
-                                    {[...pendientes, ...enCocina].map(c => (
-                                        <TarjetaComanda key={c.id} comanda={c} onCambiarEstado={cambiarEstado} />
-                                    ))}
-                                </div>
-                            )}
+                                <h2 className="text-lg font-black text-slate-800 uppercase mb-4 flex items-center gap-2">
+                                    <span className="w-3 h-3 rounded-full bg-orange-400 animate-pulse"></span>
+                                    Pendientes ({pendientes.length + enCocina.length})
+                                </h2>
+                                {pendientes.length === 0 && enCocina.length === 0 ? (
+                                    <div className="bg-white rounded-[1.5rem] border-2 border-dashed border-slate-200 p-12 text-center">
+                                        <Utensils size={40} className="mx-auto text-slate-200 mb-3" />
+                                        <p className="text-slate-400 font-bold">Sin pedidos activos</p>
+                                        <p className="text-slate-300 text-xs mt-1">Los nuevos pedidos aparecerán aquí</p>
+                                    </div>
+                                ) : (
+                                    <div className="space-y-4">
+                                        {[...pendientes, ...enCocina].map(c => (
+                                            <TarjetaComanda key={c.id} comanda={c} onCambiarEstado={cambiarEstado} />
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                             {entregadasPendienteCobro.length > 0 && (
                                 <div>
