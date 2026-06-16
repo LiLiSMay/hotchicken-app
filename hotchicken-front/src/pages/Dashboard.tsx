@@ -148,20 +148,10 @@ const Dashboard = () => {
             <main className="max-w-7xl mx-auto p-4 md:p-6">
                 {/* KPIs */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                    <div className="bg-slate-900 text-white rounded-2xl p-6 shadow-md">
-                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Empleados</p>
-                        <p className="text-4xl font-black">{empleadosActivos}</p>
-                        <p className="text-xs text-slate-400 mt-1">Con acceso activo al sistema</p>
-                    </div>
                     <div className="bg-[#fffbeb] border-2 border-yellow-200 rounded-2xl p-6 shadow-sm">
                         <p className="text-[10px] font-black uppercase tracking-widest text-yellow-600 mb-1">Mesas Ocupadas</p>
                         <p className="text-4xl font-black text-slate-800">{mesasOcupadas}</p>
                         <p className="text-xs text-slate-400 mt-1">Mesas actualmente en servicio</p>
-                    </div>
-                    <div className="bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl p-6 shadow-sm">
-                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Ventas Estimadas</p>
-                        <p className="text-4xl font-black text-slate-800">{ventasHoy.toFixed(2)} Bs.</p>
-                        <p className="text-xs text-slate-400 mt-1">Panel de control preliminar</p>
                     </div>
                 </div>
 
