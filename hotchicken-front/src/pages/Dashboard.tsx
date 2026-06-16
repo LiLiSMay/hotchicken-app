@@ -35,25 +35,22 @@ const Dashboard = () => {
     const [esParagLlevar, setEsParagLlevar] = useState(false);
     const [items, setItems] = useState<ItemPedido[]>([]);
     const [observaciones, setObservaciones] = useState('');
-    const [ventasHoy, setVentasHoy] = useState(0);
     const [enviando, setEnviando] = useState(false);
     const [mesasOcupadas, setMesasOcupadas] = useState(0);
-    const [empleadosActivos, setEmpleadosActivos] = useState(0);
+
 
     const usuario = JSON.parse(localStorage.getItem('user') || '{}');
 
     const cargarDatos = async () => {
         try {
-            const [mesasData, productosData, ventasData, empleadosData] = await Promise.all([
+            const [mesasData, productosData] = await Promise.all([
                 api.getMesas(),
                 api.getProductos(),
                 api.getVentasHoy(),
                 api.getEmpleados().catch(() => []),
             ]);
-            setEmpleadosActivos((empleadosData as any[]).filter((e: any) => e.estado === 'activo').length);
             setMesas(mesasData);
             setProductos(productosData);
-            setVentasHoy(ventasData.total || 0);
             setMesasOcupadas(mesasData.filter((m: any) => m.estado === 'ocupada').length);
         } catch (e) {
             console.error('Error al cargar datos:', e);
@@ -161,11 +158,6 @@ const Dashboard = () => {
                         className="flex items-center justify-center gap-2 p-4 rounded-2xl font-bold text-slate-800 shadow-md active:scale-95 transition-all bg-[#FACC15] text-sm">
                         <ShoppingBag size={20} /> NUEVO PEDIDO PARA LLEVAR
                     </button>
-
-                    <div className="flex items-center justify-center gap-2 bg-slate-100 p-4 rounded-2xl font-bold text-slate-500 border border-slate-200 text-sm">
-                        <ClipboardList size={20} /> TOTAL VENTAS: {ventasHoy.toFixed(2)} Bs.
-                    </div>
-
                 </div>
 
                 {/* Mapa de Mesas */}
